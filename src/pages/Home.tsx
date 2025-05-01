@@ -30,7 +30,6 @@ const Home = () => {
 
     return (
         <div className='max-container py-10'>
-            <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {isLoading ? (
                     <>
                         {Array.from({ length: 8 }, (_, index) => (
@@ -39,13 +38,23 @@ const Home = () => {
                         
                     </>
                 ) : (
-                    data?.map((product: any) => (
-                        <Product key={product.id} id={product.id} title={product.title} image={product.images[0]} rating={product.rating} price={product.price} isFavorite={false} />
-                    ))
+                    data?.length ? (
+                        <ul className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
+                            {
+                                data?.map((product: any) => (
+                                    <Product key={product.id} id={product.id} title={product.title} image={product.images[0]} rating={product.rating} price={product.price} isFavorite={false} reviews={product.reviews}  />
+                                ))
+                            }
+                        </ul>
+                    ) : (
+                        <div className='flex flex-col gap-3 items-center w-full'>
+                            <h1 className='font-bold text-5xl'>Oops...</h1>
+                            <p>Try search something else</p>
+                        </div>
+                    )
                 )}
-            </ul>
             <Toaster />
-        </div>
+        </div >
     )
 }
 

@@ -19,6 +19,7 @@ const Favorites = () => {
                                 image={item.image} 
                                 price={item.price} 
                                 isFavorite={item.isFavorite}
+                                reviews={item.reviews}
                             />
                         ))}
                     </ul>

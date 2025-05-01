@@ -2,16 +2,23 @@ import { Link, NavLink } from 'react-router-dom'
 import { Input } from "@/components/ui/input"
 import { Heart, Search, ShoppingCart } from 'lucide-react'
 import { useCartStore, useFavoritesStore, useSearchValue } from '@/store'
+import { useState } from 'react'
 
 const Header = () => {
-    const value = useSearchValue((state) => state.value)
     const setValue = useSearchValue((state) => state.setValue)
+
+    const [inputValue, setInputValue] = useState("")
+
+    const handleSetValue = (e: React.FormEvent<HTMLFormElement>): void => {
+        e.preventDefault()
+        setValue(inputValue)
+    }
 
     const cart = useCartStore((state) => state.items)
 
     const favoritesItems = useFavoritesStore((state) => state.items)
     return (
-        <header className='py-5 fixed top-0 left-0 right-0 bg-background shadow-md z-10'>
+        <header className='py-5 fixed top-0 left-0 right-0 bg-background shadow-md z-50'>
             <div className="max-container">
                 <nav className='flex items-center justify-between'>
                     <Link to="/" className='flex items-center gap-2'>
@@ -53,23 +60,23 @@ const Header = () => {
                         </li>
                     </ul>
                     <div className="flex items-center gap-4">
-                        <div className="flex">
+                        <form onSubmit={handleSetValue} className="flex">
                             <Input
                                 type="text"
                                 placeholder="Search..."
-                                value={value}
-                                onChange={(e) => setValue(e.target.value)}
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
                             />
-                            <button className='bg-primary text-white p-2 rounded-md ml-2 cursor-pointer'>
+                            <button type='submit' className='bg-primary text-white p-2 rounded-md ml-2 cursor-pointer'>
                                 <Search size={20} />
                             </button>
-                        </div>
+                        </form>
                         <Link className='relative' to="/favorites">
-                        <div className='absolute -right-2 -top-2 rounded-full bg-primary w-4 h-4 flex items-center justify-center'>{favoritesItems.length}</div>
+                        <div className='text-[12px] absolute -right-2 -top-2 rounded-full bg-primary w-4 h-4 flex items-center justify-center'>{favoritesItems.length}</div>
                             <Heart size={20} className='' />
                         </Link>
                         <Link className='relative' to="/cart">
-                            <div className='absolute -right-2 -top-2 rounded-full bg-primary w-4 h-4 flex items-center justify-center'>{cart.length}</div>
+                            <div className='text-[12px] absolute -right-2 -top-2 rounded-full bg-primary w-4 h-4 flex items-center justify-center'>{cart.length}</div>
                             <ShoppingCart size={20} className='' />
                         </Link>
                     </div>

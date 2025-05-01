@@ -6,4 +6,12 @@ export type ProductType = {
     price: number
     quantity?: number
     isFavorite: boolean
+    reviews: UserType[]
+}
+
+export type UserType = {
+    name: string
+    date: string
+    comment: string
+    rating: number
 }

@@ -17,47 +17,89 @@ type CartState = {
     addToCart: (product: ProductType) => void;
     increaseQuantity: (id: number) => void;
     decreaseQuantity: (id: number) => void;
+    removeFromCart: (id: number) => void;
 }
 
-export const useCartStore = create<CartState>()(
-    persist(
-        ((set, get) => ({
-            items: [],
-            addToCart: (product) => {
-              const exists = get().items.find((p) => p.id === product.id);
-              if (exists) {
-                set({
-                  items: get().items.map((item) =>
-                    item.id === product.id
-                      ? { ...item, quantity: item.quantity! + 1 }
-                      : item
-                  ),
-                });
-              } else {
-                set({ items: [...get().items, { ...product, quantity: 1 }] });
-              }
-            },
-            increaseQuantity: (id) => {
-                set({
-                    items: get().items.map((item) => 
-                        item.id === id ? { ...item, quantity: item.quantity! + 1 } : item
-                    )
-                })
-            },
-            decreaseQuantity: (id) => {
-                set({
-                    items: get().items.map((item) => 
-                        item.id === id ? { ...item, quantity: item.quantity! - 1 } : item
-                    )
-                })
-            },
-          })),
-          {
-            name: 'cart-storage', // name of the item in the storage (must be unique)
-            storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
-          },
-    )
-)
+export const useCartStore = create<CartState>((set, get) => ({
+    items: [],
+    addToCart: (product) => {
+      const exists = get().items.find((p) => p.id === product.id);
+      if (exists) {
+        set({
+          items: get().items.map((item) =>
+            item.id === product.id
+              ? { ...item, quantity: item.quantity! + 1 }
+              : item
+          ),
+        });
+      } else {
+        set({ items: [...get().items, { ...product, quantity: 1 }] });
+      }
+    },
+    increaseQuantity: (id) => {
+        set({
+            items: get().items.map((item) => 
+                item.id === id ? { ...item, quantity: item.quantity! + 1 } : item
+            )
+        })
+    },
+    decreaseQuantity: (id) => {
+        set({
+            items: get().items.map((item) => 
+                item.id === id ? { ...item, quantity: item.quantity! - 1 } : item
+            )
+        })
+    },
+    removeFromCart: (id) => {
+        set({
+            items: get().items.filter((item) => item.id !== id)
+        })
+    }
+  }))
+// export const useCartStore = create<CartState>()(
+//     persist(
+//         ((set, get) => ({
+//             items: [],
+//             addToCart: (product) => {
+//               const exists = get().items.find((p) => p.id === product.id);
+//               if (exists) {
+//                 set({
+//                   items: get().items.map((item) =>
+//                     item.id === product.id
+//                       ? { ...item, quantity: item.quantity! + 1 }
+//                       : item
+//                   ),
+//                 });
+//               } else {
+//                 set({ items: [...get().items, { ...product, quantity: 1 }] });
+//               }
+//             },
+//             increaseQuantity: (id) => {
+//                 set({
+//                     items: get().items.map((item) => 
+//                         item.id === id ? { ...item, quantity: item.quantity! + 1 } : item
+//                     )
+//                 })
+//             },
+//             decreaseQuantity: (id) => {
+//                 set({
+//                     items: get().items.map((item) => 
+//                         item.id === id ? { ...item, quantity: item.quantity! - 1 } : item
+//                     )
+//                 })
+//             },
+//             removeFromCart: (id) => {
+//                 set({
+//                     items: get().items.filter((item) => item.id !== id)
+//                 })
+//             }
+//           })),
+//           {
+//             name: 'cart-storage',
+//             storage: createJSONStorage(() => sessionStorage),
+//           },
+//     )
+// )
 
 type FavoriteState = {
     items: ProductType[],
@@ -77,7 +119,7 @@ export const useFavoritesStore = create<FavoriteState>()(
             }
         })),
         {
-            name: 'favorites-storage', // name of the item in the storage (must be unique)
+            name: 'favorites-storage',
             storage: createJSONStorage(() => sessionStorage),
         }
     )

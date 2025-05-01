@@ -11,8 +11,6 @@ import './index.css';
 import Cart from './pages/Cart';
 import Favorites from './pages/Favorites';
 
-
-
 const router = createBrowserRouter([
   {
     path: '/',
