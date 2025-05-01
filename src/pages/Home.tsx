@@ -23,7 +23,7 @@ const Home = () => {
 
     const value = useSearchValue((state) => state.value)
 
-    const { data, isLoading, error } = useQuery<ProductType[]>({
+    const { data, isLoading } = useQuery<ProductType[]>({
         queryKey: ['products', value],
         queryFn: () => fetchProducts(value),
     })

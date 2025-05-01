@@ -1,9 +1,5 @@
-import { useCartStore, useFavoritesStore } from '@/store'
-import { fetchProducts } from './Home'
-import { useQuery } from '@tanstack/react-query'
-import { ProductType } from '@/types'
+import { useFavoritesStore } from '@/store'
 import Product from '@/components/Product'
-import CartProduct from '@/components/CartProduct'
 
 const Favorites = () => {
     const favoritesItems = useFavoritesStore((state) => state.items)

@@ -1,8 +1,4 @@
 import { useCartStore } from '@/store'
-import { fetchProducts } from './Home'
-import { useQuery } from '@tanstack/react-query'
-import { ProductType } from '@/types'
-import Product from '@/components/Product'
 import CartProduct from '@/components/CartProduct'
 
 const Cart = () => {

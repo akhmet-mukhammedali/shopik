@@ -1,7 +1,6 @@
-import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Input } from "@/components/ui/input"
-import { Heart, Search, ShoppingBag, ShoppingCart } from 'lucide-react'
+import { Heart, Search, ShoppingCart } from 'lucide-react'
 import { useCartStore, useFavoritesStore, useSearchValue } from '@/store'
 
 const Header = () => {
