@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input"
 import { Heart, Search, ShoppingCart } from 'lucide-react'
 import { useCartStore, useFavoritesStore, useSearchValue } from '@/store'
 import { useState } from 'react'
+import { delay, motion } from 'motion/react'
 
 const Header = () => {
     const setValue = useSearchValue((state) => state.setValue)
@@ -22,42 +23,45 @@ const Header = () => {
             <div className="max-container">
                 <nav className='flex items-center justify-between'>
                     <Link to="/" className='flex items-center gap-2'>
-                        <img className='w-6' src="/logo.svg" alt="Logo" />
+                        <motion.img initial={{ translateY: -100 }} animate={{ translateY: 1 }} transition={{ delay: 0.3 }} className='w-6' src="/logo.svg" alt="Logo" />
                         <span className='text-2xl font-bold'>Shopik</span>
                     </Link>
                     <ul>
-                        <li className='inline-block mx-4'>
+                        <motion.li initial={{ translateX: -10 }} animate={{ translateX: 0 }}
+                        whileHover={{ translateX: 2 }}  className='inline-block mx-4'>
                             <NavLink
                                 to="/"
                                 className={({ isActive }) => isActive ? 'underline' : ''}
                             >
                                 Home
                             </NavLink>
-                        </li>
-                        <li className='inline-block mx-4'>
+                        </motion.li>
+                        <motion.li initial={{ translateX: -10 }} animate={{ translateX: 0 }} transition={{ dalay: 0.2 }}
+                        whileHover={{ translateX: 2 }}  className='inline-block mx-4'>
                             <NavLink
                                 to="/contact"
                                 className={({ isActive }) => isActive ? 'underline' : ''}
                             >
                                 Contact
                             </NavLink>
-                        </li>
-                        <li className='inline-block mx-4'>
+                        </motion.li>
+                        <motion.li initial={{ translateX: -10 }} animate={{ translateX: 0 }} transition={{ dalay: 0.4 }}
+                        whileHover={{ translateX: 2 }} className='inline-block mx-4'>
                             <NavLink
                                 to="/about"
                                 className={({ isActive }) => isActive ? 'underline' : ''}
                             >
                                 About
                             </NavLink>
-                        </li>
-                        <li className='inline-block mx-4'>
+                        </motion.li>
+                        <motion.li initial={{ translateX: -10 }} animate={{ translateX: 0 }} transition={{ dalay: 0.6 }} whileHover={{ translateX: 2 }} className='inline-block mx-4'>
                             <NavLink
                                 to="/sign-up"
                                 className={({ isActive }) => isActive ? 'underline' : ''}
                             >
                                 Sign Up
                             </NavLink>
-                        </li>
+                        </motion.li>
                     </ul>
                     <div className="flex items-center gap-4">
                         <form onSubmit={handleSetValue} className="flex">

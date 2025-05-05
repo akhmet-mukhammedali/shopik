@@ -1,7 +1,9 @@
 import { useCartStore } from '@/store'
+import { toast } from 'sonner'
 
 const Counter = (product: {
     id: number
+    title: string
     quantity: number
 }) => {
     const cart = useCartStore((state) => state.items)
@@ -12,6 +14,7 @@ const Counter = (product: {
     const handleDescrease = () => {
         if (quantity === 1) {
             removeFromCart(product.id)
+            toast(`${product.title} was removed from the cart`)
         } else {
             decreaseQuantity(product.id)
         }

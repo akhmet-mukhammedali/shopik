@@ -31,12 +31,11 @@ const Home = () => {
     return (
         <div className='max-container py-10'>
                 {isLoading ? (
-                    <>
-                        {Array.from({ length: 8 }, (_, index) => (
+                    <ul className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
+                        {Array.from({ length: 12 }, (_, index) => (
                             <ProductSkeleton key={index} />
                         ))}
-                        
-                    </>
+                    </ul>
                 ) : (
                     data?.length ? (
                         <ul className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>

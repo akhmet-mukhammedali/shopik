@@ -4,16 +4,17 @@ import { Heart } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 import Counter from "./Counter"
+import { motion } from "framer-motion"
 
 const generateStars = (rating: number) => {
     const stars = []
     let numbersLeft = rating
     while (numbersLeft > 0) {
         if (numbersLeft >= 1) {
-            stars.push(<img key={Math.random()} className="w-4" src="/star-gold.svg" />);
+            stars.push(<motion.img animate={{ rotate: 90 }} key={Math.random()} className="w-4" src="/star-gold.svg" />);
             numbersLeft -= 1;
         } else if (numbersLeft === 0.5) {
-            stars.push(<img key={Math.random()} className="w-4" src="/star-half.svg" />);
+            stars.push(<motion.img animate={{ rotate: 90 }} key={Math.random()} className="w-[15px]" src="/star-half.svg" />);
             numbersLeft = 0;
         }
     }
@@ -45,7 +46,7 @@ const Product = (product: ProductType) => {
     }
 
     return (
-        <div className="flex flex-col gap-4 overflow-hidden" onMouseOver={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.2}} className={`flex flex-col gap-4 overflow-hidden duration-100 ${hovered && "opacity-85"}`} onMouseOver={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
             <div className="relative bg-[#1a1a1a] rounded-[7px] flex flex-col items-center justify-center overflow-hidden">
                 {favoritesItems.some((item) => item.id === product.id) ?
                     <button className="absolute top-6 right-6 cursor-pointer z-20" onClick={() => { toggleFavorites(product), toast(`${product.title} was removed from favorites`) }}>
@@ -59,10 +60,13 @@ const Product = (product: ProductType) => {
                 {
                     cart.some((item) => item.id === product.id) ?
                         (<div className="w-full bg-primary text-white py-2 absolute left-0 right-0 bottom-0">
-                            <Counter id={product.id} quantity={product.quantity ?? 1} />
+                            <Counter id={product.id} quantity={product.quantity ?? 1} title={product.title} />
                         </div>) : (
                             <div className={`w-full bg-primary text-white py-2 absolute left-0 right-0 duration-100 ${hovered ? "bottom-0" : "-bottom-10"}`}>
-                                <button className="w-full cursor-pointer" onClick={() => addToCart(product)}>Add to cart</button>
+                                <button className="w-full cursor-pointer" onClick={() => {
+                                    addToCart(product),
+                                    toast(`${product.title} was added to the cart`)
+                                } }>Add to cart</button>
                             </div>
                         )
                 }
@@ -77,7 +81,7 @@ const Product = (product: ProductType) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

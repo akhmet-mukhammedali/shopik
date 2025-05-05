@@ -1,14 +1,15 @@
-import { Card } from './ui/card'
 import { Skeleton } from './ui/skeleton'
 
 const ProductSkeleton = () => {
   return (
-    <Card className="w-full h-full flex flex-col justify-between rounded-2xl animate-pulse gap-0 p-0">
-        <Skeleton className='rounded-[10px] h-[241px] w-[241px] m-6' />
-        <Skeleton className='rounded-[10px] w-1/2 h-4 mx-6'  />
-        <Skeleton className='rounded-[10px] w-1/2 h-4 mx-6 mt-2'  />
-        <Skeleton className='rounded-[10px] w-1/2 h-2 m-6' />
-    </Card>
+    <div>
+      <Skeleton className='w-full h-[206px] rounded-[7px]' />
+      <Skeleton  className='w-1/2 h-5 rounded-[7px] mt-3'/>
+      <div className='flex gap-2 mt-2'>
+        <Skeleton className='w-1/5 h-4 rounded-[7px]'/>
+        <Skeleton className='w-1/2 h-4 rounded-[7px]' />
+      </div>
+    </div>
   )
 }
 
